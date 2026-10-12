@@ -83,10 +83,10 @@ end
 action = function(host, port)
   local out = stdnse.output_table()
 
-  local users_arg = stdnse.get_script_args("ftpmulti.users") or "anonymous,ftp"
+  local users_arg = stdnse.get_script_args("ftpmulti.users") or "anonymous:ftp"
   local pass = stdnse.get_script_args("ftpmulti.pass") or "anonymous@nmap.scan"
 
-  for user in users_arg:gmatch("[^,]+") do
+  for user in users_arg:gmatch("[^:]+") do
     local state, code, ms = try_account(host, port, user, pass)
     out[user] = string.format("%s (%s, %d ms)", state, code, ms)
   end
